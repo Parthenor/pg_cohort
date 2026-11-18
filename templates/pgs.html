@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Find a PG | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">YOUR SPACE, YOUR BUDGET</p><h1>Explore PG stays</h1><p class="muted">Browse available sample listings and filter by location or rent.</p></div>
+<form class="filter-bar" method="get">
+  <label>Location <input name="location" value="{{ location }}" placeholder="e.g. North Campus"></label>
+  <label>Maximum monthly rent (₹) <input name="max_rent" type="number" min="0" value="{{ max_rent }}" placeholder="e.g. 12000"></label>
+  <button class="btn primary" type="submit">Apply filters</button>
+  <a class="clear-link" href="{{ url_for('pgs') }}">Clear</a>
+</form>
+{% if listings %}
+<div class="card-grid">
+  {% for pg in listings %}
+  <article class="pg-card">
+    <div class="pg-illustration illustration-{{ (loop.index % 3) + 1 }}"><span class="illustration-icon">⌂</span><span class="tag">{{ pg.room_type }}</span></div>
+    <div class="pg-card-body">
+      <p class="location">⌖ {{ pg.location }} · {{ pg.distance_km }} km from campus</p>
+      <h3>{{ pg.pg_name }}</h3>
+      <p class="muted">{{ pg.description }}</p>
+      <p class="facility-line">✦ {{ pg.facilities }}</p>
+      <div class="card-bottom"><div><p class="price">₹{{ "{:,}".format(pg.monthly_rent) }}<small>/month</small></p><small class="muted">{{ pg.available_beds }} beds available</small></div><a class="btn primary small" href="{{ url_for('book', pg_id=pg.pg_id) }}">Request a visit</a></div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><h2>No listings found</h2><p>Try another location or increase your maximum rent.</p><a class="btn secondary" href="{{ url_for('pgs') }}">Show all PGs</a></div>
+{% endif %}
+{% endblock %}

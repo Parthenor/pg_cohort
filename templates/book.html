@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Request a visit | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">TAKE THE NEXT STEP</p><h1>Request a PG visit</h1><p class="muted">This demo stores a request in the database; it does not make a real reservation.</p></div>
+<div class="form-layout">
+  <section class="summary-card"><div class="pg-illustration illustration-2"><span class="illustration-icon">⌂</span></div><div class="pg-card-body"><p class="location">⌖ {{ pg.location }}</p><h2>{{ pg.pg_name }}</h2><p class="muted">{{ pg.description }}</p><p class="facility-line">✦ {{ pg.facilities }}</p><p class="price">₹{{ "{:,}".format(pg.monthly_rent) }}<small>/month</small></p><p class="muted">{{ pg.available_beds }} beds currently listed as available</p></div></section>
+  <form method="post" class="form-card"><h2>Your request</h2>
+    <p class="muted">Submitting as <strong>{{ session.get('student_id') and 'your logged-in account' }}</strong></p>
+    <label>Message (optional)<textarea name="message" rows="4" placeholder="Preferred visit time or any questions..."></textarea></label>
+    <button class="btn primary full" type="submit">Submit booking request →</button><p class="small-note">A demo request will be saved with Pending status.</p>
+  </form>
+</div>
+{% endblock %}

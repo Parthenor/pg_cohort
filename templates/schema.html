@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Database schema | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">UNDER THE HOOD</p><h1>Database schema</h1><p class="muted">Four relational tables support the main application workflow.</p></div>
+<div class="schema-grid">
+  <article class="schema-card"><div class="schema-head">students <span>01</span></div><p><b>PK</b> student_id</p><p>full_name · email <b class="unique">UNIQUE</b></p><p>college · gender · city</p><div class="schema-foot">One student can have multiple booking requests.</div></article>
+  <article class="schema-card"><div class="schema-head">roommate_preferences <span>02</span></div><p><b>PK</b> preference_id</p><p><b>FK</b> student_id <b class="unique">UNIQUE</b></p><p>budget · sleep_schedule</p><p>study_style · cleanliness</p><p>smoking_preference · preferred_location</p><div class="schema-foot">One-to-one relationship with students.</div></article>
+  <article class="schema-card"><div class="schema-head">pg_accommodations <span>03</span></div><p><b>PK</b> pg_id</p><p>pg_name · location · monthly_rent</p><p>room_type · facilities</p><p>available_beds · distance_km</p><p>description</p><div class="schema-foot">One PG can receive multiple requests.</div></article>
+  <article class="schema-card"><div class="schema-head">bookings <span>04</span></div><p><b>PK</b> booking_id</p><p><b>FK</b> student_id → students</p><p><b>FK</b> pg_id → pg_accommodations</p><p>request_date · status · message</p><div class="schema-foot">Connects students to PGs through requests.</div></article>
+</div>
+<div class="notice"><strong>DBMS concepts demonstrated</strong><span>Primary keys, foreign keys, UNIQUE and CHECK constraints, joins, filtering, grouping, HAVING, subqueries, and optional indexes.</span></div>
+<h2 class="subheading">Relationship summary</h2>
+<div class="relationship"><span>students</span><b>1 ─── 1</b><span>roommate_preferences</span></div>
+<div class="relationship"><span>students</span><b>1 ─── many</b><span>bookings</span></div>
+<div class="relationship"><span>pg_accommodations</span><b>1 ─── many</b><span>bookings</span></div>
+{% endblock %}

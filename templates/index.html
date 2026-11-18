@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}PG Cohort | Find your place{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+    <h1>Find a place.<br><span>Find your people.</span></h1>
+    <p class="hero-text">Discover student-friendly PGs and connect with roommates who fit your everyday routine.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('pgs') }}">Explore PGs <span>→</span></a>
+      <a class="btn secondary" href="{{ url_for('roommates') }}">Find roommates</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+    <div class="art-house"><div class="roof"></div><div class="house-body"><div class="window"></div><div class="door"></div></div></div>
+    <div class="floating-note note-top">⌂ &nbsp; A place to belong</div>
+    <div class="floating-note note-bottom">✦ &nbsp; Made for student life</div>
+  </div>
+</section>
+<section class="stats">
+  <div><strong>{{ pg_count }}</strong><span>PG listings</span></div>
+  <div><strong>{{ student_count }}</strong><span>Sample student profiles</span></div>
+  <div><strong>{{ booking_count }}</strong><span>Booking requests</span></div>
+</section>
+<section class="section-heading">
+  <div><p class="eyebrow">A GOOD PLACE TO START</p><h2>Featured stays</h2></div>
+  <a class="text-link" href="{{ url_for('pgs') }}">View all listings →</a>
+</section>
+<div class="card-grid">
+  {% for pg in pgs %}
+  <article class="pg-card">
+    <div class="pg-illustration illustration-{{ loop.index }}"><span class="illustration-icon">⌂</span><span class="tag">{{ pg.room_type }}</span></div>
+    <div class="pg-card-body">
+      <p class="location">⌖ {{ pg.location }} · {{ pg.distance_km }} km from campus</p>
+      <h3>{{ pg.pg_name }}</h3>
+      <p class="muted">{{ pg.facilities }}</p>
+      <div class="card-bottom"><p class="price">₹{{ "{:,}".format(pg.monthly_rent) }}<small>/month</small></p><a class="round-arrow" href="{{ url_for('book', pg_id=pg.pg_id) }}">↗</a></div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+<section class="match-banner">
+  <div><p class="eyebrow">LIVING WELL, TOGETHER</p><h2>More than a room.<br>A roommate who gets you.</h2><p>Compare study styles, sleep schedules and everyday preferences.</p></div>
+  <a class="btn light" href="{{ url_for('roommates') }}">Check compatibility →</a>
+</section>
+{% endblock %}

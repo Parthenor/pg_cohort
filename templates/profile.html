@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}My Profile | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">YOUR ACCOUNT</p><h1>My profile</h1><p class="muted">This is the profile and preference information currently saved in PG Cohort.</p></div>
+<section class="profile-card">
+  <div class="profile-heading"><div class="avatar large">{{ student.full_name.split()[0][0] }}{{ student.full_name.split()[-1][0] }}</div><div><h2>{{ student.full_name }}</h2><p class="muted">{{ student.email }}</p></div></div>
+  <h3>Basic information</h3><div class="profile-grid">
+    <div><span>College</span><strong>{{ student.college }}</strong></div><div><span>Gender</span><strong>{{ student.gender }}</strong></div><div><span>City</span><strong>{{ student.city }}</strong></div>
+  </div>
+  <h3>Roommate preferences</h3><div class="profile-grid">
+    <div><span>Monthly budget</span><strong>₹{{ "{:,}".format(student.budget or 0) }}</strong></div><div><span>Sleep schedule</span><strong>{{ student.sleep_schedule or 'Not set' }}</strong></div><div><span>Study style</span><strong>{{ student.study_style or 'Not set' }}</strong></div><div><span>Cleanliness</span><strong>{{ student.cleanliness or 'Not set' }}</strong></div><div><span>Smoking preference</span><strong>{{ student.smoking_preference or 'Not set' }}</strong></div><div><span>Preferred location</span><strong>{{ student.preferred_location or 'Not set' }}</strong></div>
+  </div>
+  <div class="profile-actions"><a class="btn primary" href="{{ url_for('roommates') }}">View roommate matches →</a><a class="btn secondary" href="{{ url_for('pgs') }}">Find a PG</a></div>
+</section>
+{% endblock %}

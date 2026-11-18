@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Booking requests | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">REQUEST TRACKER</p><h1>Booking requests</h1><p class="muted">All requests stored in the database appear here.</p></div>
+{% if bookings %}
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Student</th><th>PG accommodation</th><th>Rent/month</th><th>Date</th><th>Status</th></tr></thead><tbody>
+{% for b in bookings %}<tr><td>#{{ b.booking_id }}</td><td>{{ b.full_name }}</td><td><strong>{{ b.pg_name }}</strong><small class="table-sub">{{ b.location }}</small></td><td>₹{{ "{:,}".format(b.monthly_rent) }}</td><td>{{ b.request_date }}</td><td><span class="status {{ b.status|lower }}">{{ b.status }}</span></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">⌂</div><h2>No booking requests yet</h2><p>Submit a request from any PG listing to see it here.</p><a class="btn primary" href="{{ url_for('pgs') }}">Explore PGs</a></div>
+{% endif %}
+{% endblock %}

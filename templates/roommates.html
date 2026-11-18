@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Roommate Match | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">BETTER SHARED LIVING</p><h1>Your roommate matches</h1><p class="muted">Matches are calculated from the preferences saved in your profile.</p></div>
+<div class="notice"><strong>How the score works</strong><span>Budget similarity and matching sleep, study, cleanliness, smoking, and location preferences contribute to the score. This is a simple demo heuristic, not a guarantee of compatibility.</span></div>
+<h2 class="subheading">Suggested for {{ selected_name }}</h2>
+{% if matches %}<div class="match-list">
+  {% for m in matches %}<article class="match-card">
+    <div class="avatar">{{ m.full_name.split()[0][0] }}{{ m.full_name.split()[-1][0] }}</div>
+    <div class="match-info"><h3>{{ m.full_name }}</h3><p class="muted">{{ m.college }} · {{ m.location }}</p><p class="match-reasons">{% if m.reasons %}✓ {{ m.reasons|join(" · ") }}{% else %}Preferences differ; compare details before deciding.{% endif %}</p></div>
+    <div class="score"><strong>{{ m.score }}%</strong><span>compatibility</span><div class="score-track"><i style="width: {{ m.score }}%"></i></div></div>
+  </article>{% endfor %}
+</div>{% else %}<div class="empty-state"><p>No other profiles with preferences are available yet. Invite classmates to sign up!</p></div>{% endif %}
+{% endblock %}

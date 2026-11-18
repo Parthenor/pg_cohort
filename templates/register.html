@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Create account | PG Cohort{% endblock %}
+{% block content %}
+<div class="page-title"><p class="eyebrow">MAKE YOUR PROFILE</p><h1>Join PG Cohort</h1><p class="muted">Your details and roommate preferences will be saved to the project database.</p></div>
+<form method="post" class="form-card register-card">
+  <h2>Basic information</h2>
+  <div class="form-grid">
+    <label>Full name<input name="full_name" autocomplete="name" required value="{{ request.form.get('full_name','') }}"></label>
+    <label>Email address<input type="email" name="email" autocomplete="email" required value="{{ request.form.get('email','') }}"></label>
+    <label>Password <span class="field-hint">(at least 8 characters)</span><input type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+    <label>College / university<input name="college" required value="{{ request.form.get('college','') }}"></label>
+    <label>Gender<select name="gender" required><option value="">Choose one</option>{% for option in ['Male','Female','Non-binary','Prefer not to say','Other'] %}<option value="{{ option }}" {% if request.form.get('gender')==option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></label>
+    <label>City<input name="city" required value="{{ request.form.get('city','') }}"></label>
+  </div>
+  <h2>Roommate preferences</h2>
+  <div class="form-grid">
+    <label>Monthly budget (₹)<input type="number" name="budget" min="0" step="500" required value="{{ request.form.get('budget','') }}"></label>
+    <label>Sleep schedule<select name="sleep_schedule" required><option value="">Choose one</option>{% for option in ['Early','Late','Flexible'] %}<option {% if request.form.get('sleep_schedule')==option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></label>
+    <label>Study style<select name="study_style" required><option value="">Choose one</option>{% for option in ['Quiet','Group','Flexible'] %}<option {% if request.form.get('study_style')==option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></label>
+    <label>Cleanliness preference<select name="cleanliness" required><option value="">Choose one</option>{% for option in ['High','Medium','Relaxed'] %}<option {% if request.form.get('cleanliness')==option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></label>
+    <label>Smoking preference<select name="smoking_preference" required><option value="">Choose one</option>{% for option in ['Non-smoking','Smoking','No preference'] %}<option {% if request.form.get('smoking_preference')==option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></label>
+    <label>Preferred area / campus<input name="preferred_location" required placeholder="e.g. North Campus" value="{{ request.form.get('preferred_location','') }}"></label>
+  </div>
+  <button class="btn primary full" type="submit">Create account →</button>
+  <p class="small-note">Already registered? <a href="{{ url_for('login') }}">Log in</a>.</p>
+</form>
+{% endblock %}
